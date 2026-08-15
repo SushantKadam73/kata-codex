@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kata Codex — preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Schibsted+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3eee4;
+      --ink: #14110d;
+      --mute: #5b5348;
+      --line: #d8cebb;
+      --card: #fffaf2;
+      --red: #b42318;
+      --stage: #0c0b09;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Newsreader", Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+    a { color: inherit; }
+    .bar {
+      display: flex; justify-content: space-between; align-items: center;
+      width: min(1100px, 92%); margin: 0 auto; padding: 1.1rem 0;
+      border-bottom: 1px solid var(--line);
+      font-family: "Schibsted Grotesk", sans-serif;
+      letter-spacing: .16em; text-transform: uppercase; font-size: .72rem;
+    }
+    .brand { font-weight: 700; letter-spacing: .22em; }
+    .wrap { width: min(1100px, 92%); margin: 0 auto; }
+    .hero { padding: 3.4rem 0 2rem; display: grid; grid-template-columns: 1.4fr .8fr; gap: 2rem; }
+    h1 { font-size: clamp(2.6rem, 7vw, 5.2rem); line-height: .95; font-weight: 500; margin: 0; }
+    .kicker { font-family: "Schibsted Grotesk", sans-serif; letter-spacing: .18em; text-transform: uppercase; font-size: .72rem; color: var(--red); }
+    .lede { color: var(--mute); font-size: 1.15rem; max-width: 38rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; padding-bottom: 3rem; }
+    .card {
+      background: var(--card); border: 1px solid var(--line); padding: 1rem 1rem 1.1rem;
+      min-height: 190px; text-decoration: none; display: flex; flex-direction: column; gap: .45rem;
+    }
+    .card.stub { opacity: .65; }
+    .num { font-family: "IBM Plex Mono", monospace; font-size: .72rem; color: var(--red); }
+    .cut {
+      background: var(--stage); color: #f4ead0; padding: 2.2rem 0 3rem; margin-top: 1rem;
+    }
+    .cut .wrap { display: grid; grid-template-columns: 1fr 300px; gap: 1.4rem; }
+    .stage { min-height: 420px; border: 1px solid #2a261c; padding: 1.1rem; position: relative; overflow: hidden; }
+    .stage:before {
+      content: ""; position: absolute; inset: auto -30% -40% -30%; height: 55%;
+      background: radial-gradient(circle, rgba(180,35,24,.28), transparent 60%); pointer-events: none;
+    }
+    .log { min-height: 240px; position: relative; }
+    .bubble { max-width: 70ch; margin: .7rem 0; }
+    .user { color: #c9b892; }
+    .composer { display: flex; gap: .6rem; margin-top: 1rem; }
+    .composer input {
+      flex: 1; background: transparent; border: 0; border-bottom: 1px solid #3a3428;
+      color: #f4ead0; padding: .7rem 0; font: inherit; outline: none;
+    }
+    .composer button, .chip {
+      font-family: "Schibsted Grotesk", sans-serif; text-transform: uppercase; letter-spacing: .1em;
+      border: 0; background: var(--red); color: #fff; padding: .7rem 1rem; cursor: pointer;
+    }
+    .chip { background: transparent; border: 1px solid #3a3428; color: #f4ead0; margin: .35rem .35rem 0 0; }
+    .cite { display: block; text-decoration: none; border: 1px solid #2a261c; margin-bottom: .7rem; }
+    .cite img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+    .cite div { padding: .65rem; }
+    .cite small { color: #b7ad98; }
+    .status { font-family: "IBM Plex Mono", monospace; font-size: .72rem; color: #c9b892; }
+    .note { width: min(1100px, 92%); margin: 0 auto; padding: 2rem 0 4rem; color: var(--mute); }
+    @media (max-width: 860px) {
+      .hero, .cut .wrap { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="bar">
+    <div class="brand">Kata Codex</div>
+    <div>Book · Cutter · Independent study edition</div>
+  </header>
+
+  <section class="wrap hero">
+    <div>
+      <p class="kicker">16 lectures · Varun Mayya</p>
+      <h1>The book they were too lazy to rewind.</h1>
+      <p class="lede">
+        A readable wiki of the Katas — slides, arguments, timestamps — and a Cutter that
+        answers from the corpus, then drops you on the exact YouTube second. This preview
+        runs retrieval in the browser. The real Next.js app talks to OpenCode first, then OpenRouter.
+      </p>
+    </div>
+    <div>
+      <p class="kicker">Not Aeos</p>
+      <p class="lede">Independent study edition. Seeded chapters: 01–04, 06–10. Stubs fill after ingest.</p>
+    </div>
+  </section>
+
+  <section class="wrap grid" id="book"></section>
+
+  <section class="cut">
+    <div class="wrap">
+      <div>
+        <p class="kicker">Cutter knowledge interface</p>
+        <h2 style="font-size:2.4rem;margin:.2rem 0 1rem;font-weight:500;">Ask the Katas.</h2>
+        <div class="stage">
+          <p class="status" id="meta">local BM25 · preview (no API key)</p>
+          <div class="log" id="log">
+            <div class="bubble">What is GTO? What makes a good hire? The preview Cutter ranks seeded chapters in your browser.</div>
+          </div>
+          <div class="composer">
+            <input id="q" placeholder="Ask anything in the corpus" />
+            <button id="go" type="button">Cut</button>
+          </div>
+          <div id="chips"></div>
+        </div>
+      </div>
+      <aside id="cites"></aside>
+    </div>
+  </section>
+
+  <section class="note">
+    <p><strong>How the real app differs.</strong> `kata-codex/` is a Next.js project for Vercel Hobby. Chat hits `/api/chat`, which BM25-selects 2–4 chapters and calls OpenCode Zen free models first (`big-pickle`, `deepseek-v4-flash-free`, …). If Zen 429s, it falls to OpenRouter `:free`. Extra OpenRouter keys do not raise the 50/day account cap. Ingest runs on your laptop, never on Vercel.</p>
+  </section>
+
+  <script>
+    const KATAS = [
+      {id:1,slug:"kata-01-zero-funding",title:"Guide to Scaling A Startup with Zero Funding",sub:"Aspiration, proofs, Lollapalooza.",vid:"9NjA41wShTI",ready:true},
+      {id:2,slug:"kata-02-coordination",title:"Why 90% of Companies Break After 50 People",sub:"Lightning Way. Stories, incentives, writing.",vid:"uojkYJz7d-k",ready:true},
+      {id:3,slug:"kata-03-how-i-use-ai",title:"How I Use AI (1 Hour Masterclass)",sub:"Literal genie. Clarity is the wish.",vid:"yJFsZLgUa40",ready:true},
+      {id:4,slug:"kata-04-scouters",title:"Why Indians Don't Attempt",sub:"Scouters. Attempts produce information.",vid:"mPjj7-eHw1s",ready:true},
+      {id:5,slug:"kata-05-psychological-safety",title:"Fear-Driven Organisations",sub:"Psychological safety. Title to confirm.",vid:null,ready:false},
+      {id:6,slug:"kata-06-unprofitable",title:"Why Indian Startups Are Unprofitable",sub:"Attribution and unit economics.",vid:"jEnxvZXzo0E",ready:true},
+      {id:7,slug:"kata-07-lost",title:"Career Advice for People Who Feel Lost",sub:"Confusion is not diversification.",vid:"Ia_bqazMeIw",ready:true},
+      {id:8,slug:"kata-08-hired",title:"How to Get Hired Faster Than Everyone Else",sub:"CHAMP-R. Proof of work.",vid:"oQd7Dw47VdU",ready:true},
+      {id:9,slug:"kata-09-risk",title:"How To Take Risk Like Rich People Do",sub:"GTO: cheap experiments, high payoff.",vid:"EWFn-RgxZ5M",ready:true},
+      {id:10,slug:"kata-10-distribution",title:"How Distribution Can 10x Your Luck",sub:"Surface area for luck.",vid:"TGKgCLVxRCk",ready:true},
+      {id:11,slug:"kata-11-simplicity",title:"Simplicity",sub:"Restraint as a premium.",vid:null,ready:false},
+      {id:12,slug:"kata-12",title:"Kata 12",sub:"Awaiting official title.",vid:null,ready:false},
+      {id:13,slug:"kata-13",title:"Kata 13",sub:"Awaiting official title.",vid:null,ready:false},
+      {id:14,slug:"kata-14",title:"Kata 14",sub:"Awaiting official title.",vid:null,ready:false},
+      {id:15,slug:"kata-15",title:"Kata 15",sub:"Awaiting official title.",vid:null,ready:false},
+      {id:16,slug:"kata-16",title:"Kata 16",sub:"The closer.",vid:null,ready:false},
+    ];
+
+    const CHUNKS = [
+      {kata:9,title:"How To Take Risk Like Rich People Do",section:"What GTO actually means here",t:978,vid:"EWFn-RgxZ5M",
+        text:"GTO stands for game theory optimal, a poker idea. Varun's translation: can I take a very cheap experiment, ideally free, with a high payoff? That is how you take risk like people who stay rich. An entrepreneur's job is not to take risk. In real life an entrepreneur's job is to reduce risk."},
+      {kata:9,title:"How To Take Risk Like Rich People Do",section:"Keep 80–90% ultra-safe",t:3211,vid:"EWFn-RgxZ5M",
+        text:"Keep 80 to 90 percent of life ultra-safe. Medium risk is what wipes people out. Build shock absorbers — cash, broad skills — before you swing. Stay in the game long enough for a cheap experiment to pay."},
+      {kata:8,title:"How to Get Hired Faster Than Everyone Else",section:"CHAMP-R and proof of work",t:400,vid:"oQd7Dw47VdU",
+        text:"What makes a good hire? CHAMP-R: cultural fit, hard skills, attitude, motivation. Skills sit lowest because they can be learned. Attitude is greater than skill. CVs mean less; proof of work and portfolios mean more. Aeos pays above market and gives uncapped bonuses to people they are afraid to lose."},
+      {kata:2,title:"Why 90% of Companies Break After 50 People",section:"The Lightning Way",t:718,vid:"uojkYJz7d-k",
+        text:"Companies break after 50 people because coordination cost explodes. The Lightning Way generates current through stories and incentives. Clear writing reduces coordination cost. A coordinated system focused on growth crushes an uncoordinated system with infighting."},
+      {kata:2,title:"Why 90% of Companies Break After 50 People",section:"Writing reduces coordination cost",t:2400,vid:"uojkYJz7d-k",
+        text:"Write Person A's exact job, incentives, and plan. Do the same for Person B. Then the grand plan for how they coordinate. You can make even non-coordinators coordinate this way."},
+      {kata:4,title:"Why Indians Don't Attempt",section:"What are scouters?",t:90,vid:"mPjj7-eHw1s",
+        text:"A scouter reads competence under personal risk, not talk. Attempts produce information. India is described as an anti-attempt culture, afraid of finding out whether the story of yourself is true."},
+      {kata:4,title:"Why Indians Don't Attempt",section:"Five scouter levels",t:1255,vid:"mPjj7-eHw1s",
+        text:"Talk, belief, prediction, clean attempt, pulled it off. One clean high-integrity attempt raises your scouter even if the outcome is bad. High scouters cluster with high scouters."},
+      {kata:3,title:"How I Use AI",section:"AI as a literal genie",t:183,vid:"yJFsZLgUa40",
+        text:"Most execution failures are context failures rather than skill failures. AI is a literal genie: it does what you said, not what you meant. Examples, references, and precise specs are the wish."},
+      {kata:1,title:"Guide to Scaling A Startup with Zero Funding",section:"Aspiration as a hiring engine",t:120,vid:"9NjA41wShTI",
+        text:"Public stage work makes hiring easy. Aspiration on YouTube and Instagram attracted talent. A non-aspirational business cannot recruit the same way."},
+      {kata:7,title:"Career Advice for People Who Feel Lost",section:"Confusion is not a strategy",t:180,vid:"Ia_bqazMeIw",
+        text:"Confusion is five interesting things with no P&L. Diversification is extra revenue without quitting the core job. The minute you make a choice, you are ahead of everybody else."},
+      {kata:6,title:"Why Indian Startups Are Unprofitable",section:"Attribution is the missing instrument",t:180,vid:"jEnxvZXzo0E",
+        text:"If you cannot attribute what caused a win, you will scale noise. Attribution is treated as a life skill, not just a marketing report. Unit economics over narrative."},
+      {kata:10,title:"How Distribution Can 10x Your Luck",section:"Increase the number of rolls",t:180,vid:"TGKgCLVxRCk",
+        text:"Luck, career, and income scale with how widely the work can be found. Distribution is surface area for luck. Content dampens luck by giving you more rolls."},
+      {kata:5,title:"Secret Kata #1",section:"Social defeat is infectious",t:720,vid:"wM7jyLJBi_g",
+        text:"It is not bad thoughts that lead to bad mood. It is bad mood that leads to bad thoughts. Serotonin tracks social safety. Companies that run on social-defeat principles are biologically destined for toxicity. The manager is a serotonin balancer: praise publicly, criticise privately."},
+      {kata:11,title:"How Simplifying Everything Makes You Rich",section:"Build the one thing. Then sell it.",t:1200,vid:"0tbeJZYvsg4",
+        text:"Successful entrepreneurs know the one specific thing that works. Then they just market and sell it. Junior engineers add complexity. Seniors delete it. One task, one person."},
+      {kata:12,title:"How I Manage Projects End To End",section:"Buy technology when the arithmetic forces you",t:1800,vid:"mwQhnZ32CeE",
+        text:"Rent technology for R&D. Buy when a role converts to shot and the hire-count is insane. Time one unit, multiply by the full project, add a 30 percent buffer."},
+      {kata:13,title:"How to Think Like Rich People",section:"Survive failure while retaining upside",t:900,vid:"8WgipmPSPKk",
+        text:"Take enormous risks is the wrong lesson. Survive failure while retaining upside. The rich want death-or-50x because they have many lives. Downside is zero. Upside is uncapped."},
+    ];
+
+    const book = document.getElementById("book");
+    book.innerHTML = KATAS.map(k => `
+      <a class="card ${k.ready ? "" : "stub"}" href="${k.vid ? "https://www.youtube.com/watch?v="+k.vid : "#"}" target="${k.vid ? "_blank" : ""}" rel="noopener noreferrer">
+        <span class="num">Kata ${String(k.id).padStart(2,"0")}${k.ready ? "" : " · stub"}</span>
+        <strong>${k.title}</strong>
+        <span style="color:#5b5348">${k.sub}</span>
+      </a>`).join("");
+
+    const starters = ["What is GTO?", "What makes a good hire?", "Why do companies break after 50 people?", "What is a scouter?"];
+    document.getElementById("chips").innerHTML = starters.map(s => `<button class="chip" type="button">${s}</button>`).join("");
+
+    function tok(s){ return s.toLowerCase().replace(/[^a-z0-9\s]/g," ").split(/\s+/).filter(w => w.length>2); }
+    function search(q){
+      const qs = tok(q);
+      return CHUNKS.map(c => {
+        const hay = tok(c.text+" "+c.section+" "+c.title);
+        let score = 0;
+        for (const t of qs) score += hay.filter(h => h===t || h.includes(t)).length;
+        return {c, score};
+      }).filter(x => x.score>0).sort((a,b)=>b.score-a.score).slice(0,3);
+    }
+    function fmt(t){ const m=Math.floor(t/60), s=t%60; return m+":"+String(s).padStart(2,"0"); }
+    function ask(q){
+      const hits = search(q);
+      const log = document.getElementById("log");
+      log.insertAdjacentHTML("beforeend", `<div class="bubble user">${q}</div>`);
+      if (!hits.length) {
+        log.insertAdjacentHTML("beforeend", `<div class="bubble">Nothing in the seeded book matched. Try GTO, hire, scouter, coordination, or confusion.</div>`);
+        return;
+      }
+      const top = hits[0].c;
+      const answer = `${top.text}<br><br>Source: Kata ${top.kata}, ${fmt(top.t)} — ${top.section}.`;
+      log.insertAdjacentHTML("beforeend", `<div class="bubble">${answer}</div>`);
+      document.getElementById("cites").innerHTML = hits.map(({c}) => `
+        <a class="cite" href="https://www.youtube.com/watch?v=${c.vid}&t=${c.t}s" target="_blank" rel="noopener noreferrer">
+          <img src="https://i.ytimg.com/vi/${c.vid}/hqdefault.jpg" alt="" />
+          <div><strong>Kata ${c.kata}: ${c.title}</strong><br><small>${c.section} · ${fmt(c.t)}</small></div>
+        </a>`).join("");
+      document.getElementById("meta").textContent = "local BM25 · "+hits.length+" sources";
+    }
+    document.getElementById("go").onclick = () => {
+      const v = document.getElementById("q").value.trim();
+      if (v) ask(v);
+    };
+    document.getElementById("q").addEventListener("keydown", e => { if (e.key==="Enter") document.getElementById("go").click(); });
+    document.querySelectorAll(".chip").forEach(b => b.onclick = () => ask(b.textContent));
+  </script>
+</body>
+</html>
